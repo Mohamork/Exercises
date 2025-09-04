@@ -1,81 +1,208 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="no">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Exercise App</title>
+    <title>Tilfeldig Treningsplan</title>
     <style>
         body {
-            font-family: Arial, sans-serif;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #f88a03, #4d4a4a);
             margin: 0;
-            background-color: #f0f0f0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            min-height: 100vh;
         }
-        #randomNote {
-            font-size: 1.5em;
-            font-weight: bold;
-            margin: 20px;
-            padding: 20px;
-            background: #fff;
-            border: 1px solid #ddd;
-            border-radius: 5px;
-            text-align: center;
-            max-width: 600px;
+
+        h1 {
+            margin-top: 60px;
+            font-size: 2.5em;
+            color: #333;
         }
+
         button {
-            padding: 10px 20px;
-            font-size: 1em;
+            margin: 10px;
+            padding: 12px 25px;
+            font-size: 16px;
+            background-color: #28a745;
+            color: white;
+            border: none;
+            border-radius: 30px;
             cursor: pointer;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+            transition: background-color 0.3s ease;
+        }
+
+        button:hover {
+            background-color: #218838;
+        }
+
+        .exercise-list {
+            margin-top: 30px;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+            justify-content: center;
+            max-width: 1000px;
+            padding: 20px;
+        }
+
+        .card {
+            background: white;
+            border-radius: 15px;
+            padding: 20px 25px;
+            box-shadow: 0 8px 16px rgba(0,0,0,0.1);
+            width: 250px;
+            transition: transform 0.2s ease;
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+        }
+
+        .exercise-title {
+            font-weight: bold;
+            font-size: 1.2em;
+            color: #333;
+            margin-bottom: 10px;
+        }
+
+        .exercise-details {
+            color: #555;
+        }
+
+        .timer-controls {
+            margin-top: 40px;
+            text-align: center;
+        }
+
+        .timer-controls select {
+            padding: 10px;
+            font-size: 16px;
+            border-radius: 10px;
+            border: 1px solid #ccc;
+        }
+
+        .timer-display {
+            margin-top: 20px;
+            font-size: 3em;
+            color: #444;
+            background-color: #ffffff;
+            border-radius: 50%;
+            width: 150px;
+            height: 150px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 6px 12px rgba(0,0,0,0.1);
+        }
+
+        footer {
+            margin-top: auto;
+            padding: 20px;
+            font-size: 0.9em;
+            color: #888;
         }
     </style>
 </head>
 <body>
-    <div id="randomNote">Click the button to show a random exercise.</div>
-    <button onclick="showRandomNote()">Show Random Exercise</button>
+
+    <h1>Tilfeldig Treningsplan</h1>
+    <button onclick="generateWorkout()">Lag ny treningsøkt</button>
+
+    <div class="exercise-list" id="workoutPlan"></div>
+
+    <div class="timer-controls">
+        <h2>Pause-timer</h2>
+        <select id="pauseDuration">
+            <option value="30">30 sekunder</option>
+            <option value="40">40 sekunder</option>
+            <option value="60">60 sekunder</option>
+        </select>
+        <br>
+        <button onclick="startTimer()">Start pause</button>
+        <div class="timer-display" id="timer">00:00</div>
+    </div>
+
+    <footer>
+        © 2025 Treningsplan Webapp
+    </footer>
 
     <script>
-        // Initial notes directly embedded in the HTML file
-        const notes = [
-            // Add additional notes here
-"Quadruped hip circles",
-"Side lying hip raises",
-"Sidelying hip circles",
-"Bodyweight deadlift",
-"Clamshell",
-"Bird dog",
-"Sideplank",
-"McGill Curl up",
-"3 point plank",
-"Reverse hamstring curls",
-"Bearcrawl Bird Dog",
-"Toe raises",
-"Squats",
-"Squat Bouncers",
-"Glute Bridge",
-"Prone Hip Extension",
-"Pushups",
-"Heel raises",
-"Ankle abductions",
-"Walk with toes lifted",
-"Walk on side-edges of feet",
-"Walk with ankles lifted",
-
-            
-
-
+        const exercises = [
+            { name: "Band Face Pulls", reps: 10, sets: 5 },
+            { name: "Banded Hip Abduction", reps: 10, sets: 5 },
+            { name: "Plank Bird Dog", reps: 10, sets: 3 },
+            { name: "SOTS Press", reps: 10, sets: 5 },
+            { name: "Offset Squats", reps: 10, sets: 5 },
+            { name: "Kettlebell High Pull", reps: 10, sets: 5 },
+            { name: "Kettlebell Goodmorning", reps: 10, sets: 3 },
+            { name: "Banded Hip External Rotation", reps: 10, sets: 5 },
+            { name: "Banded Lateral Walk", reps: 10, sets: 5 },
+            { name: "Glute Kickbacks", reps: 10, sets: 3 },
+            {name: "Sideplank", reps: 10, sets: 5},
+            {name: "Kettlebell Deadlift", reps: 10 , sets: 5},
+            {name: "Single Leg Romanian Deadlift", reps: 10, sets: 3},
+            {name: "Heel Raises w/ Kettlebell", reps: 10, sets: 5},
+            {name: "Kettlebell Bent Over Row", reps: 10, sets:5},
+            {name: "Bear Crawl Bird Dog", reps: 10, sets: 3},
+            {name: "90s Crunch", reps: 10, sets: 5}
         ];
 
-        function showRandomNote() {
-            if (notes.length > 0) {
-                const randomIndex = Math.floor(Math.random() * notes.length);
-                document.getElementById("randomNote").innerText = notes[randomIndex];
-            } else {
-                document.getElementById("randomNote").innerText = "No exercise available.";
-            }
+        function generateWorkout() {
+            const workoutPlan = document.getElementById("workoutPlan");
+            workoutPlan.innerHTML = "";
+
+            const shuffled = exercises.sort(() => 0.5 - Math.random());
+            const selected = shuffled.slice(0, 5);
+
+            selected.forEach(ex => {
+                const card = document.createElement("div");
+                card.className = "card";
+
+                const title = document.createElement("div");
+                title.className = "exercise-title";
+                title.textContent = ex.name;
+
+                const details = document.createElement("div");
+                details.className = "exercise-details";
+                details.textContent = `${ex.reps} repetisjoner x ${ex.sets} sett`;
+
+                card.appendChild(title);
+                card.appendChild(details);
+                workoutPlan.appendChild(card);
+            });
+        }
+
+        let timerInterval;
+
+        function startTimer() {
+            const timerDisplay = document.getElementById("timer");
+            const duration = parseInt(document.getElementById("pauseDuration").value);
+            let timeLeft = duration;
+
+            clearInterval(timerInterval); // stop any existing timer
+            updateTimerDisplay(timeLeft);
+
+            timerInterval = setInterval(() => {
+                timeLeft--;
+                updateTimerDisplay(timeLeft);
+
+                if (timeLeft <= 0) {
+                    clearInterval(timerInterval);
+                    timerDisplay.textContent = "Ferdig!";
+                }
+            }, 1000);
+        }
+
+        function updateTimerDisplay(seconds) {
+            const timerDisplay = document.getElementById("timer");
+            const mins = String(Math.floor(seconds / 60)).padStart(2, '0');
+            const secs = String(seconds % 60).padStart(2, '0');
+            timerDisplay.textContent = `${mins}:${secs}`;
         }
     </script>
+
 </body>
 </html>
