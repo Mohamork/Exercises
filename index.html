@@ -42,14 +42,22 @@ button:hover {
     background-color: #218838;
 }
 
+/* Wrapper for to rader */
 .exercise-list {
     margin-top: 20px;
     display: flex;
     flex-direction: column;
     gap: 16px;
     width: 100%;
-    padding: 10px;
     align-items: center;
+}
+
+.row {
+    display: flex;
+    justify-content: center;
+    gap: 16px;
+    flex-wrap: nowrap;
+    width: 100%;
 }
 
 .card {
@@ -117,40 +125,13 @@ footer {
     text-align: center;
 }
 
-/* Desktop: omvendt pyramide med 3 øverst og 2 nederst */
-@media (min-width: 1024px) {
-    .exercise-list {
-        display: grid;
-        grid-template-columns: repeat(3, 1fr);
-        grid-template-rows: auto auto;
-        gap: 24px;
-        max-width: 900px;
-        justify-items: center;
-        align-items: start;
-    }
+/* Desktop: pyramideform */
+@media (min-width: 768px) {
+    h1 { font-size: 2.5em; }
+    .card { max-width: 250px; }
 
-    /* Øverste rad - større kort */
-    .exercise-list .card:nth-child(1),
-    .exercise-list .card:nth-child(2),
-    .exercise-list .card:nth-child(3) {
-        width: 260px;
-        height: auto;
-    }
-
-    /* Nederste rad - mindre kort */
-    .exercise-list .card:nth-child(4),
-    .exercise-list .card:nth-child(5) {
-        width: 220px;
-        height: auto;
-    }
-
-    /* Plassering for omvendt pyramide */
-    .exercise-list .card:nth-child(1) { grid-column: 1 / 2; grid-row: 1; }
-    .exercise-list .card:nth-child(2) { grid-column: 2 / 3; grid-row: 1; }
-    .exercise-list .card:nth-child(3) { grid-column: 3 / 4; grid-row: 1; }
-
-    .exercise-list .card:nth-child(4) { grid-column: 2 / 3; grid-row: 2; }
-    .exercise-list .card:nth-child(5) { grid-column: 3 / 4; grid-row: 2; }
+    .top-row .card { width: 260px; }
+    .bottom-row .card { width: 220px; }
 }
 </style>
 </head>
@@ -159,7 +140,10 @@ footer {
 <h1>Tilfeldig Treningsplan</h1>
 <button onclick="generateWorkout()">Lag ny treningsøkt</button>
 
-<div class="exercise-list" id="workoutPlan"></div>
+<div class="exercise-list" id="workoutPlan">
+    <div class="row top-row" id="topRow"></div>
+    <div class="row bottom-row" id="bottomRow"></div>
+</div>
 
 <div class="timer-controls">
     <h2>Pause-timer</h2>
@@ -201,57 +185,37 @@ const exercises = [
 ];
 
 function generateWorkout() {
-    const workoutPlan = document.getElementById("workoutPlan");
-    workoutPlan.innerHTML = "";
+    const topRow = document.getElementById("topRow");
+    const bottomRow = document.getElementById("bottomRow");
+    topRow.innerHTML = "";
+    bottomRow.innerHTML = "";
 
     const shuffled = [...exercises].sort(() => 0.5 - Math.random());
     const selected = shuffled.slice(0, 5);
 
-    selected.forEach(ex => {
-        const card = document.createElement("div");
-        card.className = "card";
+    // Øverste rad: 3 kort
+    selected.slice(0,3).forEach(ex => {
+        const card = createCard(ex);
+        topRow.appendChild(card);
+    });
 
-        const title = document.createElement("div");
-        title.className = "exercise-title";
-        title.textContent = ex.name;
-
-        const details = document.createElement("div");
-        details.className = "exercise-details";
-        details.textContent = `${ex.reps} repetisjoner × ${ex.sets} sett`;
-
-        card.appendChild(title);
-        card.appendChild(details);
-        workoutPlan.appendChild(card);
+    // Nederste rad: 2 kort
+    selected.slice(3,5).forEach(ex => {
+        const card = createCard(ex);
+        bottomRow.appendChild(card);
     });
 }
 
-let timerInterval;
-function startTimer() {
-    const timerDisplay = document.getElementById("timer");
-    const duration = parseInt(document.getElementById("pauseDuration").value);
-    let timeLeft = duration;
+function createCard(ex) {
+    const card = document.createElement("div");
+    card.className = "card";
 
-    clearInterval(timerInterval);
-    updateTimerDisplay(timeLeft);
+    const title = document.createElement("div");
+    title.className = "exercise-title";
+    title.textContent = ex.name;
 
-    timerInterval = setInterval(() => {
-        timeLeft--;
-        updateTimerDisplay(timeLeft);
+    const details = document.createElement("div");
+    details.className = "exercise-details";
+    details.textContent = `${ex.reps} repetisjoner × ${ex.sets} sett`;
 
-        if (timeLeft <= 0) {
-            clearInterval(timerInterval);
-            timerDisplay.textContent = "Ferdig!";
-        }
-    }, 1000);
-}
-
-function updateTimerDisplay(seconds) {
-    const timerDisplay = document.getElementById("timer");
-    const mins = String(Math.floor(seconds / 60)).padStart(2, '0');
-    const secs = String(seconds % 60).padStart(2, '0');
-    timerDisplay.textContent = `${mins}:${secs}`;
-}
-</script>
-
-</body>
-</html>
+    card.appendChild(t
