@@ -42,7 +42,6 @@ button:hover {
     background-color: #218838;
 }
 
-/* Wrapper for to rader */
 .exercise-list {
     margin-top: 20px;
     display: flex;
@@ -70,9 +69,7 @@ button:hover {
     transition: transform 0.2s ease;
 }
 
-.card:hover {
-    transform: translateY(-4px);
-}
+.card:hover { transform: translateY(-4px); }
 
 .exercise-title {
     font-weight: bold;
@@ -125,11 +122,9 @@ footer {
     text-align: center;
 }
 
-/* Desktop: pyramideform */
 @media (min-width: 768px) {
     h1 { font-size: 2.5em; }
     .card { max-width: 250px; }
-
     .top-row .card { width: 260px; }
     .bottom-row .card { width: 220px; }
 }
@@ -140,7 +135,7 @@ footer {
 <h1>Tilfeldig Treningsplan</h1>
 <button onclick="generateWorkout()">Lag ny treningsøkt</button>
 
-<div class="exercise-list" id="workoutPlan">
+<div class="exercise-list">
     <div class="row top-row" id="topRow"></div>
     <div class="row bottom-row" id="bottomRow"></div>
 </div>
@@ -157,9 +152,7 @@ footer {
     <div class="timer-display" id="timer">00:00</div>
 </div>
 
-<footer>
-    © 2025 Treningsplan Webapp
-</footer>
+<footer>© 2025 Treningsplan Webapp</footer>
 
 <script>
 const exercises = [
@@ -184,26 +177,27 @@ const exercises = [
     { name: "Supine Leg Raises", reps: 10, sets: 5 }
 ];
 
+function shuffle(array) {
+    for (let i = array.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [array[i], array[j]] = [array[j], array[i]];
+    }
+    return array;
+}
+
 function generateWorkout() {
     const topRow = document.getElementById("topRow");
     const bottomRow = document.getElementById("bottomRow");
     topRow.innerHTML = "";
     bottomRow.innerHTML = "";
 
-    const shuffled = [...exercises].sort(() => 0.5 - Math.random());
+    const shuffled = shuffle([...exercises]);
     const selected = shuffled.slice(0, 5);
 
     // Øverste rad: 3 kort
-    selected.slice(0,3).forEach(ex => {
-        const card = createCard(ex);
-        topRow.appendChild(card);
-    });
-
+    selected.slice(0,3).forEach(ex => topRow.appendChild(createCard(ex)));
     // Nederste rad: 2 kort
-    selected.slice(3,5).forEach(ex => {
-        const card = createCard(ex);
-        bottomRow.appendChild(card);
-    });
+    selected.slice(3,5).forEach(ex => bottomRow.appendChild(createCard(ex)));
 }
 
 function createCard(ex) {
@@ -250,6 +244,5 @@ function updateTimerDisplay(seconds) {
     timerDisplay.textContent = `${mins}:${secs}`;
 }
 </script>
-
 </body>
 </html>
