@@ -3,6 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <title>Tilfeldig Treningsplan</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <style>
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
@@ -16,15 +17,16 @@
         }
 
         h1 {
-            margin-top: 60px;
-            font-size: 2.5em;
+            margin-top: 40px;
+            font-size: 2em;
             color: #333;
+            text-align: center;
         }
 
         button {
             margin: 10px;
-            padding: 12px 25px;
-            font-size: 16px;
+            padding: 14px 28px;
+            font-size: 18px;
             background-color: #28a745;
             color: white;
             border: none;
@@ -32,6 +34,8 @@
             cursor: pointer;
             box-shadow: 0 4px 10px rgba(0,0,0,0.1);
             transition: background-color 0.3s ease;
+            width: 80%;
+            max-width: 300px;
         }
 
         button:hover {
@@ -39,70 +43,86 @@
         }
 
         .exercise-list {
-            margin-top: 30px;
+            margin-top: 20px;
             display: flex;
             flex-wrap: wrap;
-            gap: 20px;
+            gap: 16px;
             justify-content: center;
-            max-width: 1000px;
-            padding: 20px;
+            width: 100%;
+            padding: 10px;
         }
 
         .card {
             background: white;
             border-radius: 15px;
-            padding: 20px 25px;
+            padding: 18px 22px;
             box-shadow: 0 8px 16px rgba(0,0,0,0.1);
-            width: 250px;
+            width: 90%;
+            max-width: 320px;
             transition: transform 0.2s ease;
         }
 
         .card:hover {
-            transform: translateY(-5px);
+            transform: translateY(-4px);
         }
 
         .exercise-title {
             font-weight: bold;
             font-size: 1.2em;
             color: #333;
-            margin-bottom: 10px;
+            margin-bottom: 8px;
         }
 
         .exercise-details {
             color: #555;
+            font-size: 1em;
         }
 
         .timer-controls {
-            margin-top: 40px;
+            margin-top: 30px;
             text-align: center;
+            width: 100%;
         }
 
         .timer-controls select {
-            padding: 10px;
-            font-size: 16px;
+            padding: 12px;
+            font-size: 18px;
             border-radius: 10px;
             border: 1px solid #ccc;
+            width: 80%;
+            max-width: 250px;
         }
 
         .timer-display {
             margin-top: 20px;
-            font-size: 3em;
+            font-size: 2.5em;
             color: #444;
             background-color: #ffffff;
             border-radius: 50%;
-            width: 150px;
-            height: 150px;
+            width: 120px;
+            height: 120px;
             display: flex;
             align-items: center;
             justify-content: center;
             box-shadow: 0 6px 12px rgba(0,0,0,0.1);
+            margin-left: auto;
+            margin-right: auto;
         }
 
         footer {
             margin-top: auto;
-            padding: 20px;
-            font-size: 0.9em;
+            padding: 15px;
+            font-size: 0.85em;
             color: #888;
+            text-align: center;
+        }
+
+        /* ---- Desktop justeringer ---- */
+        @media (min-width: 768px) {
+            h1 { font-size: 2.5em; }
+            .card { width: 250px; }
+            button { font-size: 16px; }
+            .timer-display { width: 150px; height: 150px; font-size: 3em; }
         }
     </style>
 </head>
@@ -141,15 +161,15 @@
             { name: "Banded Hip External Rotation", reps: 10, sets: 5 },
             { name: "Banded Lateral Walk", reps: 10, sets: 5 },
             { name: "Glute Kickbacks", reps: 10, sets: 3 },
-            {name: "Sideplank", reps: 10, sets: 5},
-            {name: "Kettlebell Deadlift", reps: 10 , sets: 5},
-            {name: "Single Leg Romanian Deadlift", reps: 10, sets: 3},
-            {name: "Heel Raises w/ Kettlebell", reps: 10, sets: 5},
-            {name: "Kettlebell Bent Over Row", reps: 10, sets:5},
-            {name: "Bear Crawl Bird Dog", reps: 10, sets: 3},
-            {name: "90s Crunch", reps: 10, sets: 5},
-            {name: "Back Extensions", reps: 10, sets: 3},
-            {name: "Straightleg Glute Bridge", reps: 10, sets: 5}
+            { name: "Sideplank", reps: 10, sets: 5 },
+            { name: "Kettlebell Deadlift", reps: 10 , sets: 5 },
+            { name: "Single Leg Romanian Deadlift", reps: 10, sets: 3 },
+            { name: "Heel Raises w/ Kettlebell", reps: 10, sets: 5 },
+            { name: "Kettlebell Bent Over Row", reps: 10, sets:5 },
+            { name: "Bear Crawl Bird Dog", reps: 10, sets: 3 },
+            { name: "90s Crunch", reps: 10, sets: 5 },
+            { name: "Back Extensions", reps: 10, sets: 3 },
+            { name: "Supine Leg Raises", reps: 10, sets: 5 }
         ];
 
         function generateWorkout() {
@@ -169,7 +189,7 @@
 
                 const details = document.createElement("div");
                 details.className = "exercise-details";
-                details.textContent = `${ex.reps} repetisjoner x ${ex.sets} sett`;
+                details.textContent = `${ex.reps} repetisjoner × ${ex.sets} sett`;
 
                 card.appendChild(title);
                 card.appendChild(details);
@@ -184,7 +204,7 @@
             const duration = parseInt(document.getElementById("pauseDuration").value);
             let timeLeft = duration;
 
-            clearInterval(timerInterval); // stop any existing timer
+            clearInterval(timerInterval);
             updateTimerDisplay(timeLeft);
 
             timerInterval = setInterval(() => {
