@@ -218,4 +218,38 @@ function createCard(ex) {
     details.className = "exercise-details";
     details.textContent = `${ex.reps} repetisjoner × ${ex.sets} sett`;
 
-    card.appendChild(t
+    card.appendChild(title);
+    card.appendChild(details);
+    return card;
+}
+
+let timerInterval;
+function startTimer() {
+    const timerDisplay = document.getElementById("timer");
+    const duration = parseInt(document.getElementById("pauseDuration").value);
+    let timeLeft = duration;
+
+    clearInterval(timerInterval);
+    updateTimerDisplay(timeLeft);
+
+    timerInterval = setInterval(() => {
+        timeLeft--;
+        updateTimerDisplay(timeLeft);
+
+        if (timeLeft <= 0) {
+            clearInterval(timerInterval);
+            timerDisplay.textContent = "Ferdig!";
+        }
+    }, 1000);
+}
+
+function updateTimerDisplay(seconds) {
+    const timerDisplay = document.getElementById("timer");
+    const mins = String(Math.floor(seconds / 60)).padStart(2, '0');
+    const secs = String(seconds % 60).padStart(2, '0');
+    timerDisplay.textContent = `${mins}:${secs}`;
+}
+</script>
+
+</body>
+</html>
