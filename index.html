@@ -1,255 +1,257 @@
 <!DOCTYPE html>
 <html lang="no">
 <head>
-    <meta charset="UTF-8">
-    <title>Tilfeldig Treningsplan</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <style>
-        body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background: linear-gradient(135deg, #f88a03, #4d4a4a);
-            margin: 0;
-            padding: 0;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            min-height: 100vh;
-        }
+<meta charset="UTF-8">
+<title>Tilfeldig Treningsplan</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<style>
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background: linear-gradient(135deg, #f88a03, #4d4a4a);
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    min-height: 100vh;
+}
 
-        h1 {
-            margin-top: 40px;
-            font-size: 2em;
-            color: #333;
-            text-align: center;
-        }
+h1 {
+    margin-top: 40px;
+    font-size: 2em;
+    color: #333;
+    text-align: center;
+}
 
-        button {
-            margin: 10px;
-            padding: 14px 28px;
-            font-size: 18px;
-            background-color: #28a745;
-            color: white;
-            border: none;
-            border-radius: 30px;
-            cursor: pointer;
-            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
-            transition: background-color 0.3s ease;
-            width: 80%;
-            max-width: 300px;
-        }
+button {
+    margin: 10px;
+    padding: 14px 28px;
+    font-size: 18px;
+    background-color: #28a745;
+    color: white;
+    border: none;
+    border-radius: 30px;
+    cursor: pointer;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+    transition: background-color 0.3s ease;
+    width: 80%;
+    max-width: 300px;
+}
 
-        button:hover {
-            background-color: #218838;
-        }
+button:hover {
+    background-color: #218838;
+}
 
-        .exercise-list {
-            margin-top: 20px;
-            display: flex;
-            flex-wrap: wrap;
-            gap: 16px;
-            justify-content: center;
-            width: 100%;
-            padding: 10px;
-        }
+.exercise-list {
+    margin-top: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    width: 100%;
+    padding: 10px;
+    align-items: center;
+}
 
-        .card {
-            background: white;
-            border-radius: 15px;
-            padding: 18px 22px;
-            box-shadow: 0 8px 16px rgba(0,0,0,0.1);
-            width: 90%;
-            max-width: 320px;
-            transition: transform 0.2s ease;
-        }
+.card {
+    background: white;
+    border-radius: 15px;
+    padding: 18px 22px;
+    box-shadow: 0 8px 16px rgba(0,0,0,0.1);
+    width: 90%;
+    max-width: 320px;
+    transition: transform 0.2s ease;
+}
 
-        .card:hover {
-            transform: translateY(-4px);
-        }
+.card:hover {
+    transform: translateY(-4px);
+}
 
-        .exercise-title {
-            font-weight: bold;
-            font-size: 1.2em;
-            color: #333;
-            margin-bottom: 8px;
-        }
+.exercise-title {
+    font-weight: bold;
+    font-size: 1.2em;
+    color: #333;
+    margin-bottom: 8px;
+}
 
-        .exercise-details {
-            color: #555;
-            font-size: 1em;
-        }
+.exercise-details {
+    color: #555;
+    font-size: 1em;
+}
 
-        .timer-controls {
-            margin-top: 30px;
-            text-align: center;
-            width: 100%;
-        }
+.timer-controls {
+    margin-top: 30px;
+    text-align: center;
+    width: 100%;
+}
 
-        .timer-controls select {
-            padding: 12px;
-            font-size: 18px;
-            border-radius: 10px;
-            border: 1px solid #ccc;
-            width: 80%;
-            max-width: 250px;
-        }
+.timer-controls select {
+    padding: 12px;
+    font-size: 18px;
+    border-radius: 10px;
+    border: 1px solid #ccc;
+    width: 80%;
+    max-width: 250px;
+}
 
-        .timer-display {
-            margin-top: 20px;
-            font-size: 2.5em;
-            color: #444;
-            background-color: #ffffff;
-            border-radius: 50%;
-            width: 120px;
-            height: 120px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            box-shadow: 0 6px 12px rgba(0,0,0,0.1);
-            margin-left: auto;
-            margin-right: auto;
-        }
+.timer-display {
+    margin-top: 20px;
+    font-size: 2.5em;
+    color: #444;
+    background-color: #ffffff;
+    border-radius: 50%;
+    width: 120px;
+    height: 120px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 6px 12px rgba(0,0,0,0.1);
+    margin-left: auto;
+    margin-right: auto;
+}
 
-        footer {
-            margin-top: auto;
-            padding: 15px;
-            font-size: 0.85em;
-            color: #888;
-            text-align: center;
-        }
+footer {
+    margin-top: auto;
+    padding: 15px;
+    font-size: 0.85em;
+    color: #888;
+    text-align: center;
+}
 
-        /* ---- Desktop justeringer ---- */
-        @media (min-width: 768px) {
-            h1 { font-size: 2.5em; }
-            .card { width: 250px; }
-            button { font-size: 16px; }
-            .timer-display { width: 150px; height: 150px; font-size: 3em; }
-        }
+/* Desktop: omvendt pyramide med 3 øverst og 2 nederst */
+@media (min-width: 1024px) {
+    .exercise-list {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        grid-template-rows: auto auto;
+        gap: 24px;
+        max-width: 900px;
+        justify-items: center;
+        align-items: start;
+    }
 
-        /* ---- Omvendt pyramide for desktop ---- */
-        @media (min-width: 1024px) {
-            .exercise-list {
-                display: grid;
-                grid-template-columns: repeat(3, 1fr);
-                grid-template-rows: auto auto;
-                gap: 24px;
-                justify-items: center;
-                max-width: 700px;
-                margin: 0 auto;
-            }
+    /* Øverste rad - større kort */
+    .exercise-list .card:nth-child(1),
+    .exercise-list .card:nth-child(2),
+    .exercise-list .card:nth-child(3) {
+        width: 260px;
+        height: auto;
+    }
 
-            /* Første rad – opptil tre kort */
-            .exercise-list .card:nth-child(1) { grid-column: 1; grid-row: 1; }
-            .exercise-list .card:nth-child(2) { grid-column: 2; grid-row: 1; }
-            .exercise-list .card:nth-child(3) { grid-column: 3; grid-row: 1; }
+    /* Nederste rad - mindre kort */
+    .exercise-list .card:nth-child(4),
+    .exercise-list .card:nth-child(5) {
+        width: 220px;
+        height: auto;
+    }
 
-            /* Andre rad – dynamisk sentrering */
-            .exercise-list .card:nth-child(4) { grid-column: 2; grid-row: 2; justify-self: center; }
-            .exercise-list .card:nth-child(5) { grid-column: 3; grid-row: 2; justify-self: center; }
-        }
-    </style>
+    /* Plassering for omvendt pyramide */
+    .exercise-list .card:nth-child(1) { grid-column: 1 / 2; grid-row: 1; }
+    .exercise-list .card:nth-child(2) { grid-column: 2 / 3; grid-row: 1; }
+    .exercise-list .card:nth-child(3) { grid-column: 3 / 4; grid-row: 1; }
+
+    .exercise-list .card:nth-child(4) { grid-column: 2 / 3; grid-row: 2; }
+    .exercise-list .card:nth-child(5) { grid-column: 3 / 4; grid-row: 2; }
+}
+</style>
 </head>
 <body>
 
-    <h1>Tilfeldig Treningsplan</h1>
-    <button onclick="generateWorkout()">Lag ny treningsøkt</button>
+<h1>Tilfeldig Treningsplan</h1>
+<button onclick="generateWorkout()">Lag ny treningsøkt</button>
 
-    <div class="exercise-list" id="workoutPlan"></div>
+<div class="exercise-list" id="workoutPlan"></div>
 
-    <div class="timer-controls">
-        <h2>Pause-timer</h2>
-        <select id="pauseDuration">
-            <option value="30">30 sekunder</option>
-            <option value="40">40 sekunder</option>
-            <option value="60">60 sekunder</option>
-        </select>
-        <br>
-        <button onclick="startTimer()">Start pause</button>
-        <div class="timer-display" id="timer">00:00</div>
-    </div>
+<div class="timer-controls">
+    <h2>Pause-timer</h2>
+    <select id="pauseDuration">
+        <option value="30">30 sekunder</option>
+        <option value="40">40 sekunder</option>
+        <option value="60">60 sekunder</option>
+    </select>
+    <br>
+    <button onclick="startTimer()">Start pause</button>
+    <div class="timer-display" id="timer">00:00</div>
+</div>
 
-    <footer>
-        © 2025 Treningsplan Webapp
-    </footer>
+<footer>
+    © 2025 Treningsplan Webapp
+</footer>
 
-    <script>
-        const exercises = [
-            { name: "Band Face Pulls", reps: 10, sets: 5 },
-            { name: "Banded Hip Abduction", reps: 10, sets: 5 },
-            { name: "Plank Bird Dog", reps: 10, sets: 3 },
-            { name: "SOTS Press", reps: 10, sets: 5 },
-            { name: "Offset Squats", reps: 10, sets: 5 },
-            { name: "Kettlebell High Pull", reps: 10, sets: 5 },
-            { name: "Kettlebell Goodmorning", reps: 10, sets: 3 },
-            { name: "Banded Hip External Rotation", reps: 10, sets: 5 },
-            { name: "Banded Lateral Walk", reps: 10, sets: 5 },
-            { name: "Glute Kickbacks", reps: 10, sets: 3 },
-            { name: "Sideplank", reps: 10, sets: 5 },
-            { name: "Kettlebell Deadlift", reps: 10 , sets: 5 },
-            { name: "Single Leg Romanian Deadlift", reps: 10, sets: 3 },
-            { name: "Heel Raises w/ Kettlebell", reps: 10, sets: 5 },
-            { name: "Kettlebell Bent Over Row", reps: 10, sets:5 },
-            { name: "Bear Crawl Bird Dog", reps: 10, sets: 3 },
-            { name: "90s Crunch", reps: 10, sets: 5 },
-            { name: "Back Extensions", reps: 10, sets: 3 },
-            { name: "Supine Leg Raises", reps: 10, sets: 5 }
-        ];
+<script>
+const exercises = [
+    { name: "Band Face Pulls", reps: 10, sets: 5 },
+    { name: "Banded Hip Abduction", reps: 10, sets: 5 },
+    { name: "Plank Bird Dog", reps: 10, sets: 3 },
+    { name: "SOTS Press", reps: 10, sets: 5 },
+    { name: "Offset Squats", reps: 10, sets: 5 },
+    { name: "Kettlebell High Pull", reps: 10, sets: 5 },
+    { name: "Kettlebell Goodmorning", reps: 10, sets: 3 },
+    { name: "Banded Hip External Rotation", reps: 10, sets: 5 },
+    { name: "Banded Lateral Walk", reps: 10, sets: 5 },
+    { name: "Glute Kickbacks", reps: 10, sets: 3 },
+    { name: "Sideplank", reps: 10, sets: 5 },
+    { name: "Kettlebell Deadlift", reps: 10 , sets: 5 },
+    { name: "Single Leg Romanian Deadlift", reps: 10, sets: 3 },
+    { name: "Heel Raises w/ Kettlebell", reps: 10, sets: 5 },
+    { name: "Kettlebell Bent Over Row", reps: 10, sets:5 },
+    { name: "Bear Crawl Bird Dog", reps: 10, sets: 3 },
+    { name: "90s Crunch", reps: 10, sets: 5 },
+    { name: "Back Extensions", reps: 10, sets: 3 },
+    { name: "Supine Leg Raises", reps: 10, sets: 5 }
+];
 
-        function generateWorkout() {
-            const workoutPlan = document.getElementById("workoutPlan");
-            workoutPlan.innerHTML = "";
+function generateWorkout() {
+    const workoutPlan = document.getElementById("workoutPlan");
+    workoutPlan.innerHTML = "";
 
-            // Shuffle uten å påvirke originalarray
-            const shuffled = [...exercises].sort(() => 0.5 - Math.random());
+    const shuffled = [...exercises].sort(() => 0.5 - Math.random());
+    const selected = shuffled.slice(0, 5);
 
-            // Alltid 5 kort
-            const selected = shuffled.slice(0, 5);
+    selected.forEach(ex => {
+        const card = document.createElement("div");
+        card.className = "card";
 
-            selected.forEach(ex => {
-                const card = document.createElement("div");
-                card.className = "card";
+        const title = document.createElement("div");
+        title.className = "exercise-title";
+        title.textContent = ex.name;
 
-                const title = document.createElement("div");
-                title.className = "exercise-title";
-                title.textContent = ex.name;
+        const details = document.createElement("div");
+        details.className = "exercise-details";
+        details.textContent = `${ex.reps} repetisjoner × ${ex.sets} sett`;
 
-                const details = document.createElement("div");
-                details.className = "exercise-details";
-                details.textContent = `${ex.reps} repetisjoner × ${ex.sets} sett`;
+        card.appendChild(title);
+        card.appendChild(details);
+        workoutPlan.appendChild(card);
+    });
+}
 
-                card.appendChild(title);
-                card.appendChild(details);
-                workoutPlan.appendChild(card);
-            });
-        }
+let timerInterval;
+function startTimer() {
+    const timerDisplay = document.getElementById("timer");
+    const duration = parseInt(document.getElementById("pauseDuration").value);
+    let timeLeft = duration;
 
-        let timerInterval;
+    clearInterval(timerInterval);
+    updateTimerDisplay(timeLeft);
 
-        function startTimer() {
-            const timerDisplay = document.getElementById("timer");
-            const duration = parseInt(document.getElementById("pauseDuration").value);
-            let timeLeft = duration;
+    timerInterval = setInterval(() => {
+        timeLeft--;
+        updateTimerDisplay(timeLeft);
 
+        if (timeLeft <= 0) {
             clearInterval(timerInterval);
-            updateTimerDisplay(timeLeft);
-
-            timerInterval = setInterval(() => {
-                timeLeft--;
-                updateTimerDisplay(timeLeft);
-
-                if (timeLeft <= 0) {
-                    clearInterval(timerInterval);
-                    timerDisplay.textContent = "Ferdig!";
-                }
-            }, 1000);
+            timerDisplay.textContent = "Ferdig!";
         }
+    }, 1000);
+}
 
-        function updateTimerDisplay(seconds) {
-            const timerDisplay = document.getElementById("timer");
-            const mins = String(Math.floor(seconds / 60)).padStart(2, '0');
-            const secs = String(seconds % 60).padStart(2, '0');
-            timerDisplay.textContent = `${mins}:${secs}`;
-        }
-    </script>
+function updateTimerDisplay(seconds) {
+    const timerDisplay = document.getElementById("timer");
+    const mins = String(Math.floor(seconds / 60)).padStart(2, '0');
+    const secs = String(seconds % 60).padStart(2, '0');
+    timerDisplay.textContent = `${mins}:${secs}`;
+}
+</script>
 
 </body>
 </html>
