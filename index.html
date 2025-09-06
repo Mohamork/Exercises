@@ -45,7 +45,7 @@
         .exercise-list {
             margin-top: 20px;
             display: flex;
-            flex-direction: column;
+            flex-wrap: wrap;
             gap: 16px;
             justify-content: center;
             width: 100%;
@@ -117,36 +117,37 @@
             text-align: center;
         }
 
-        /* ---- Desktop pyramidelayout ---- */
+        /* ---- Desktop justeringer ---- */
+        @media (min-width: 768px) {
+            h1 { font-size: 2.5em; }
+            .card { width: 250px; }
+            button { font-size: 16px; }
+            .timer-display { width: 150px; height: 150px; font-size: 3em; }
+        }
+
+        /* ---- Omvendt pyramide for desktop ---- */
         @media (min-width: 1024px) {
             .exercise-list {
                 display: grid;
                 grid-template-columns: repeat(3, 1fr);
+                grid-template-rows: auto auto;
                 gap: 24px;
                 justify-items: center;
                 max-width: 700px;
                 margin: 0 auto;
             }
 
-            .exercise-list .card:nth-child(1) {
-                grid-column: 2;
-            }
+            /* Første rad – opptil tre kort */
+            .exercise-list .card:nth-child(1) { grid-column: 1; grid-row: 1; }
+            .exercise-list .card:nth-child(2) { grid-column: 2; grid-row: 1; }
+            .exercise-list .card:nth-child(3) { grid-column: 3; grid-row: 1; }
 
-            .exercise-list .card:nth-child(2) {
-                grid-column: 1;
-            }
+            /* Andre rad – dynamisk sentrering */
+            .exercise-list .card:nth-child(4) { grid-column: 1 / span 3; justify-self: center; grid-row: 2; }
+            .exercise-list .card:nth-child(5) { grid-column: 2; grid-row: 2; }
 
-            .exercise-list .card:nth-child(3) {
-                grid-column: 3;
-            }
-
-            .exercise-list .card:nth-child(4) {
-                grid-column: 1;
-            }
-
-            .exercise-list .card:nth-child(5) {
-                grid-column: 3;
-            }
+            /* Sentraliser hvis kun ett kort på andre rad */
+            .exercise-list .card:nth-child(4):only-child { grid-column: 2; }
         }
     </style>
 </head>
