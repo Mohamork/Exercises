@@ -1,0 +1,14 @@
+{ name: "Plank Bird Dog", reps: 5, sets: 3 }
+{ name: "Sidebear Leg Raises", reps: 5 , sets: 3 }
+{ name: "Sidelying Leg Raises", reps: 5, sets: 3 }
+{ name: "Glute Kickbacks", reps: 5, sets : 3 }
+{ name: "3-Point-Plank", reps: 5, sets: 3 }
+{ name: "Supine Scapular Push", reps: 5, sets: 3 }
+{ name: "Seated Resistance Band Rows", reps: 5, sets: 3 }
+{ name: "Resistance Band Pushups", reps: 5, sets: 3 }
+{ name: "McGill Curl-Up", reps: 5, sets: 3 }
+{ name: "Banded Lateral Walk", reps: 5, sets: 3 }
+{ name: "Resistance Band Back Squats", reps: 5, sets: 3 }
+{ name: "Kettlebell Single Leg Deadlift", reps: 5, sets: 3 }
+{ name: "Resistance Band OFfset RDL", reps: 5, sets: 3 }
+{ name: "Suticase Carry", reps: 30, sets: 3 }
