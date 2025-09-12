@@ -155,21 +155,26 @@ footer {
 <footer>© 2025 Treningsplan Webapp</footer>
 
 <script>
-const exercises = [
-{ name: "Plank Bird Dog", reps: 5, sets: 3 },
-{ name: "Sidebear Leg Raises", reps: 5 , sets: 3 },
-{ name: "Sidelying Leg Raises", reps: 5, sets: 3 },
-{ name: "Glute Kickbacks", reps: 5, sets : 3 },
-{ name: "3-Point-Plank", reps: 5, sets: 3 },
-{ name: "Supine Scapular Push", reps: 5, sets: 3 },
-{ name: "Seated Resistance Band Rows", reps: 5, sets: 3 },
-{ name: "Resistance Band Pushups", reps: 5, sets: 3 },
-{ name: "McGill Curl-Up", reps: 5, sets: 3 },
-{ name: "Banded Lateral Walk", reps: 5, sets: 3 },
-{ name: "Resistance Band Back Squats", reps: 5, sets: 3 },
-{ name: "Kettlebell Single Leg Deadlift", reps: 5, sets: 3 },
-{ name: "Resistance Band OFfset RDL", reps: 5, sets: 3 },
-{ name: "Suticase Carry", reps: 30, sets: 3 }
+const coreExercises = [
+    { name: "Plank Bird Dog", reps: 5, sets: 3 },
+    { name: "Sideplank", reps: 5, sets: 3 },
+    { name: "McGill Curl-Up", reps: 5, sets: 3 },
+    { name: "Scapula Y Raises", reps: 5, sets: 3 }
+];
+
+const randomExercises = [
+    { name: "Sidebear Leg Raises", reps: 5 , sets: 3 },
+    { name: "Sidelying Leg Raises", reps: 5, sets: 3 },
+    { name: "Glute Kickbacks", reps: 5, sets: 3 },
+    { name: "3-Point-Plank", reps: 5, sets: 3 },
+    { name: "Supine Scapular Push", reps: 5, sets: 3 },
+    { name: "Seated Resistance Band Rows", reps: 5, sets: 3 },
+    { name: "Resistance Band Pushups", reps: 5, sets: 3 },
+    { name: "Banded Lateral Walk", reps: 5, sets: 3 },
+    { name: "Resistance Band Back Squats", reps: 5, sets: 3 },
+    { name: "Kettlebell Single Leg Deadlift", reps: 5, sets: 3 },
+    { name: "Resistance Band Offset RDL", reps: 5, sets: 3 },
+    { name: "Suitcase Carry", reps: 30, sets: 3 }
 ];
 
 function shuffle(array) {
@@ -186,12 +191,14 @@ function generateWorkout() {
     topRow.innerHTML = "";
     bottomRow.innerHTML = "";
 
-    const shuffled = shuffle([...exercises]);
-    const selected = shuffled.slice(0, 5);
+    const shuffledRandom = shuffle([...randomExercises]);
+    const randomExercise = shuffledRandom[0];
 
-    // Øverste rad: 3 kort
+    const selected = [...coreExercises, randomExercise];
+
+    // Top row: first 3 exercises
     selected.slice(0,3).forEach(ex => topRow.appendChild(createCard(ex)));
-    // Nederste rad: 2 kort
+    // Bottom row: last 2 exercises
     selected.slice(3,5).forEach(ex => bottomRow.appendChild(createCard(ex)));
 }
 
