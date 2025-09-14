@@ -16,7 +16,7 @@ body {
     min-height: 100vh;
 }
 
-h1 {
+h1, h2 {
     margin-top: 40px;
     font-size: 2em;
     color: #333;
@@ -38,11 +38,9 @@ button {
     max-width: 300px;
 }
 
-button:hover {
-    background-color: #218838;
-}
+button:hover { background-color: #218838; }
 
-.exercise-list {
+.exercise-list, .safe-exercise-container {
     margin-top: 20px;
     display: flex;
     flex-direction: column;
@@ -140,6 +138,10 @@ footer {
     <div class="row bottom-row" id="bottomRow"></div>
 </div>
 
+<h2>Safe Exercises</h2>
+<button onclick="generateSafeExercise()">Vis en safe øvelse</button>
+<div class="safe-exercise-container" id="safeExerciseContainer"></div>
+
 <div class="timer-controls">
     <h2>Pause-timer</h2>
     <select id="pauseDuration">
@@ -172,6 +174,14 @@ const randomExercises = [
     { name: "Suitcase Carry", reps: 30, sets: 3 }
 ];
 
+const safeExercises = [
+    { name: "Glute Bridge", reps: 12, sets: 3 },
+    { name: "Wall Angels", reps: 10, sets: 3 },
+    { name: "Bird Dog", reps: 8, sets: 3 },
+    { name: "Clamshells", reps: 10, sets: 3 },
+    { name: "Side-Lying Leg Lifts", reps: 10, sets: 3 }
+];
+
 function shuffle(array) {
     for (let i = array.length - 1; i > 0; i--) {
         const j = Math.floor(Math.random() * (i + 1));
@@ -195,6 +205,14 @@ function generateWorkout() {
     selected.slice(0,3).forEach(ex => topRow.appendChild(createCard(ex)));
     // Bottom row: last 2 exercises
     selected.slice(3,5).forEach(ex => bottomRow.appendChild(createCard(ex)));
+}
+
+function generateSafeExercise() {
+    const container = document.getElementById("safeExerciseContainer");
+    container.innerHTML = "";
+    const shuffled = shuffle([...safeExercises]);
+    const safeEx = shuffled[0];
+    container.appendChild(createCard(safeEx));
 }
 
 function createCard(ex) {
