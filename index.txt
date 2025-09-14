@@ -1,1 +1,245 @@
+<!DOCTYPE html>
+<html lang="no">
+<head>
+<meta charset="UTF-8">
+<title>Tilfeldig Treningsplan</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<style>
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background: linear-gradient(135deg, #f88a03, #4d4a4a);
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    min-height: 100vh;
+}
 
+h1 {
+    margin-top: 40px;
+    font-size: 2em;
+    color: #333;
+    text-align: center;
+}
+
+button {
+    margin: 10px;
+    padding: 14px 28px;
+    font-size: 18px;
+    background-color: #28a745;
+    color: white;
+    border: none;
+    border-radius: 30px;
+    cursor: pointer;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+    transition: background-color 0.3s ease;
+    width: 80%;
+    max-width: 300px;
+}
+
+button:hover {
+    background-color: #218838;
+}
+
+.exercise-list {
+    margin-top: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    width: 100%;
+    align-items: center;
+}
+
+.row {
+    display: flex;
+    justify-content: center;
+    gap: 16px;
+    flex-wrap: nowrap;
+    width: 100%;
+}
+
+.card {
+    background: white;
+    border-radius: 15px;
+    padding: 18px 22px;
+    box-shadow: 0 8px 16px rgba(0,0,0,0.1);
+    width: 90%;
+    max-width: 320px;
+    transition: transform 0.2s ease;
+}
+
+.card:hover { transform: translateY(-4px); }
+
+.exercise-title {
+    font-weight: bold;
+    font-size: 1.2em;
+    color: #333;
+    margin-bottom: 8px;
+}
+
+.exercise-details {
+    color: #555;
+    font-size: 1em;
+}
+
+.timer-controls {
+    margin-top: 30px;
+    text-align: center;
+    width: 100%;
+}
+
+.timer-controls select {
+    padding: 12px;
+    font-size: 18px;
+    border-radius: 10px;
+    border: 1px solid #ccc;
+    width: 80%;
+    max-width: 250px;
+}
+
+.timer-display {
+    margin-top: 20px;
+    font-size: 2.5em;
+    color: #444;
+    background-color: #ffffff;
+    border-radius: 50%;
+    width: 120px;
+    height: 120px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 6px 12px rgba(0,0,0,0.1);
+    margin-left: auto;
+    margin-right: auto;
+}
+
+footer {
+    margin-top: auto;
+    padding: 15px;
+    font-size: 0.85em;
+    color: #888;
+    text-align: center;
+}
+
+@media (min-width: 768px) {
+    h1 { font-size: 2.5em; }
+    .card { max-width: 250px; }
+    .top-row .card { width: 220px; }
+    .bottom-row .card { width: 260px; }
+}
+</style>
+</head>
+<body>
+
+<h1>Tilfeldig Treningsplan</h1>
+<button onclick="generateWorkout()">Lag ny treningsøkt</button>
+
+<div class="exercise-list">
+    <div class="row top-row" id="topRow"></div>
+    <div class="row bottom-row" id="bottomRow"></div>
+</div>
+
+<div class="timer-controls">
+    <h2>Pause-timer</h2>
+    <select id="pauseDuration">
+        <option value="30">30 sekunder</option>
+        <option value="40">40 sekunder</option>
+        <option value="60">60 sekunder</option>
+    </select>
+    <br>
+    <button onclick="startTimer()">Start pause</button>
+    <div class="timer-display" id="timer">00:00</div>
+</div>
+
+<footer>© 2025 Treningsplan Webapp</footer>
+
+<script>
+const coreExercises = [
+    { name: "Plank Bird Dog", reps: 5, sets: 3 },
+    { name: "Sideplank to Side-Bear", reps: 5, sets: 3 },
+    { name: "McGill Curl-Up", reps: 5, sets: 3 },
+    { name: "Scapula Y Raises", reps: 5, sets: 3 }
+];
+
+const randomExercises = [
+    { name: "Sidebear Leg Raises", reps: 5 , sets: 3 },
+    { name: "Sidelying Leg Raises", reps: 5, sets: 3 },
+    { name: "Glute Kickbacks", reps: 5, sets: 3 },
+    { name: "3-Point-Plank", reps: 5, sets: 3 },
+    { name: "Banded Lateral Walk", reps: 5, sets: 3 },
+    { name: "Kettlebell Single Leg Deadlift", reps: 5, sets: 3 },
+    { name: "Suitcase Carry", reps: 30, sets: 3 }
+];
+
+function shuffle(array) {
+    for (let i = array.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [array[i], array[j]] = [array[j], array[i]];
+    }
+    return array;
+}
+
+function generateWorkout() {
+    const topRow = document.getElementById("topRow");
+    const bottomRow = document.getElementById("bottomRow");
+    topRow.innerHTML = "";
+    bottomRow.innerHTML = "";
+
+    const shuffledRandom = shuffle([...randomExercises]);
+    const randomExercise = shuffledRandom[0];
+
+    const selected = [...coreExercises, randomExercise];
+
+    // Top row: first 3 exercises
+    selected.slice(0,3).forEach(ex => topRow.appendChild(createCard(ex)));
+    // Bottom row: last 2 exercises
+    selected.slice(3,5).forEach(ex => bottomRow.appendChild(createCard(ex)));
+}
+
+function createCard(ex) {
+    const card = document.createElement("div");
+    card.className = "card";
+
+    const title = document.createElement("div");
+    title.className = "exercise-title";
+    title.textContent = ex.name;
+
+    const details = document.createElement("div");
+    details.className = "exercise-details";
+    details.textContent = `${ex.reps} repetisjoner × ${ex.sets} sett`;
+
+    card.appendChild(title);
+    card.appendChild(details);
+    return card;
+}
+
+let timerInterval;
+function startTimer() {
+    const timerDisplay = document.getElementById("timer");
+    const duration = parseInt(document.getElementById("pauseDuration").value);
+    let timeLeft = duration;
+
+    clearInterval(timerInterval);
+    updateTimerDisplay(timeLeft);
+
+    timerInterval = setInterval(() => {
+        timeLeft--;
+        updateTimerDisplay(timeLeft);
+
+        if (timeLeft <= 0) {
+            clearInterval(timerInterval);
+            timerDisplay.textContent = "Ferdig!";
+        }
+    }, 1000);
+}
+
+function updateTimerDisplay(seconds) {
+    const timerDisplay = document.getElementById("timer");
+    const mins = String(Math.floor(seconds / 60)).padStart(2, '0');
+    const secs = String(seconds % 60).padStart(2, '0');
+    timerDisplay.textContent = `${mins}:${secs}`;
+}
+</script>
+</body>
+</html>
