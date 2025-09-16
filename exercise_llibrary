@@ -12,3 +12,13 @@
 { name: "Kettlebell Single Leg Deadlift", reps: 5, sets: 3 },
 { name: "Resistance Band OFfset RDL", reps: 5, sets: 3 },
 { name: "Suticase Carry", reps: 30, sets: 3 }
+{ name: "Glute Bridge", reps: 12, sets: 3 },
+{ name: "Sideplank Leg Raises", reps: 5 , sets: 3 },
+{ name: "Wall Angels", reps: 10, sets: 3 },
+{ name: "Kettlebell Single Leg Deadlift", reps: 5, sets: 3 },
+{ name: "Banded Lateral Walk", reps: 5, sets: 3 },
+{ name: "Bird Dog", reps: 8, sets: 3 },
+{ name: "Clamshells", reps: 10, sets: 3 },
+{ name: "Sidelying Leg Raises", reps: 5, sets: 3 },
+{ name: "Side-Lying Leg Lifts", reps: 10, sets: 3 },
+{ name: "Dead Bugz", reps: 4, sets: 3 }
